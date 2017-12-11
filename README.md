@@ -2,6 +2,8 @@
 
 ```
 setup-keymap jp jp
+ifconfig eth0 up
+udhcpc
 wget https://raw.githubusercontent.com/atsttk84/alpinelinux/master/base/answerfile
 yes | setup-alpine -e -f ./answerfile
 ```
