@@ -1,6 +1,7 @@
 # alpinelinux
 
 ```
+setup-keymap jp jp
 wget https://raw.githubusercontent.com/atsttk84/alpinelinux/master/base/anserfile
 yes | setup-alpine -e -f ./answerfile
 ```
