@@ -1,0 +1,33 @@
+- apk:
+    update_cache: yes
+
+- shell: setup-xorg-base
+
+- apk:
+    name: "{{ item }}"
+  with_items:
+    - alpine-desktop
+    - setxkbmap
+    - faenza-icon-theme
+
+
+# current version is not available
+#- user:
+#    name: alpine-user
+#    password: "{{ 'password' | password_hash('sha512') }}"
+#    groups: wheel
+- shell: adduser -D -G wheel  alpine-user
+  ignore_errors: true
+- shell: echo alpine-user:password | chpasswd
+
+- service: 
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - dbus
+    - lxdm
+
+- file: path=/etc/X11/xinit/xinitrc.d/99-xkbmap state=touch owner=root group=root mode=0755
+- lineinfile: dest=/etc/X11/xinit/xinitrc.d/99-xkbmap line='setxkbmap jp'
+

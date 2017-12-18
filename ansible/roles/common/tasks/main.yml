@@ -1,0 +1,7 @@
+- file: path=/etc/udhcpc state=directory owner=root group=root mode=0755
+- file: path=/etc/udhcpc/udhcpc.conf state=touch follow=yes owner=root group=root mode=0644
+- lineinfile: dest=/etc/udhcpc/udhcpc.conf line=RESOLV_CONF="NO"
+
+- replace: dest=/etc/apk/repositories regexp='^\s*http' replace='#http' backup=yes
+- replace: dest=/etc/apk/repositories regexp='^#(.*\/edge\/main)' replace='\1'
+- replace: dest=/etc/apk/repositories regexp='^#(.*\/edge\/community)' replace='\1'

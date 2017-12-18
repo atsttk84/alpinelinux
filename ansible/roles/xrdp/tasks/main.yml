@@ -1,0 +1,16 @@
+- apk:
+    name: "{{ item }}"
+    update_cache: yes
+    repository: http://ftp.tsukuba.wide.ad.jp/Linux/alpine/edge/testing
+  with_items:
+    - xrdp
+    - xorgxrdp
+
+
+- service: 
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - xrdp
+    - xrdp-sesman

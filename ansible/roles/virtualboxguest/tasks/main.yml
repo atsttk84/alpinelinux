@@ -1,0 +1,22 @@
+- apk:
+    name: "{{ item }}"
+  with_items:
+    - virtualbox-guest-additions
+    - virtualbox-guest-modules-virthardened
+
+- modprobe:
+    name: "{{ item }}"
+  with_items:
+    - vboxdrv
+    - vboxnetflt
+    - vboxpci
+    - vboxsf
+
+- shell: mkinitfs
+
+- shell: reboot
+  async: 1
+  poll: 0
+  ignore_errors: true
+
+- local_action: wait_for host={{ ansible_hostname }} state=started

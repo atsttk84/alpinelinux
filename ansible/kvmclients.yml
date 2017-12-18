@@ -1,0 +1,8 @@
+---
+- hosts: kvmclients
+  gather_facts: no
+  roles:
+    - common
+    - xfce4
+    - xrdp
+    - kvmclient

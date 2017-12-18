@@ -1,0 +1,5 @@
+- apk:
+    name: "{{ item }}"
+  with_items:
+    - virt-manager
+
