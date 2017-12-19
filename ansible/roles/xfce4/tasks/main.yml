@@ -1,6 +1,4 @@
-- apk:
-    update_cache: yes
-
+---
 - shell: setup-xorg-base
 
 - apk:
@@ -9,16 +7,6 @@
     - alpine-desktop
     - setxkbmap
     - faenza-icon-theme
-
-
-# current version is not available
-#- user:
-#    name: alpine-user
-#    password: "{{ 'password' | password_hash('sha512') }}"
-#    groups: wheel
-- shell: adduser -D -G wheel  alpine-user
-  ignore_errors: true
-- shell: echo alpine-user:password | chpasswd
 
 - service: 
     name: "{{ item }}"

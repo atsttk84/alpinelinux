@@ -1,3 +1,4 @@
+---
 - file: path=/etc/udhcpc state=directory owner=root group=root mode=0755
 - file: path=/etc/udhcpc/udhcpc.conf state=touch follow=yes owner=root group=root mode=0644
 - lineinfile: dest=/etc/udhcpc/udhcpc.conf line=RESOLV_CONF="NO"
@@ -5,3 +6,18 @@
 - replace: dest=/etc/apk/repositories regexp='^\s*http' replace='#http' backup=yes
 - replace: dest=/etc/apk/repositories regexp='^#(.*\/edge\/main)' replace='\1'
 - replace: dest=/etc/apk/repositories regexp='^#(.*\/edge\/community)' replace='\1'
+
+- apk:
+    update_cache: yes
+
+# current version is not available
+#- user:
+#    name: alpine-user
+#    password: "{{ 'password' | password_hash('sha512') }}"
+#    groups: wheel
+- shell: "getent passwd {{ create_user.name }}"
+  register: user_check
+- shell: "adduser -D -G wheel {{ create_user.name }}"
+  when: user_check.rc != 0
+- shell: "echo {{ create_user.name }}:{{ create_user.password }} | chpasswd"
+  when: user_check.rc != 0
