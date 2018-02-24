@@ -8,16 +8,10 @@
 - replace: dest=/etc/apk/repositories regexp='^#(.*\/edge\/community)' replace='\1'
 
 - apk:
+    name: shadow
     update_cache: yes
 
-# current version is not available
-#- user:
-#    name: alpine-user
-#    password: "{{ 'password' | password_hash('sha512') }}"
-#    groups: wheel
-- shell: "getent passwd {{ create_user.name }}"
-  register: user_check
-- shell: "adduser -D -G wheel {{ create_user.name }}"
-  when: user_check.rc != 0
-- shell: "echo {{ create_user.name }}:{{ create_user.password }} | chpasswd"
-  when: user_check.rc != 0
+- user:
+    name: "{{ create_user.name }}"
+    password: "{{ '{{ create_user.password }}' | password_hash('sha512') }}"
+    groups: wheel
